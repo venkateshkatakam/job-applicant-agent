@@ -8,17 +8,53 @@ A desktop app that finds jobs matching your resumes and prepares personalized Gm
 
 **Current version: 1.0.4**
 
-For an Apple Silicon Mac (M1 or newer), open the local installer:
+You do not need Node.js, Python, or Git to use the installed app.
 
-[release/Job Applicant Agent-1.0.4-arm64.dmg](release/Job%20Applicant%20Agent-1.0.4-arm64.dmg)
+### Find An Installer
+
+Check existing GitHub build artifacts first. Sign in to GitHub, then follow this path:
+
+**Repository > Actions > Desktop Builds > select a completed run > Summary > Artifacts** (scroll to the bottom of the summary).
+
+Choose a run for the version or branch you need, and check that its build for your platform succeeded. Download the matching artifact:
+
+| Your computer | Artifact to download | Installer inside the ZIP |
+| --- | --- | --- |
+| Windows (64-bit Intel/AMD) | **Job-Applicant-Agent-Windows** | `.exe` |
+| Mac with Apple Silicon (M1 or newer) | **Job-Applicant-Agent-macOS** | `arm64.dmg` |
+| Intel Mac | **Job-Applicant-Agent-macOS** | `x64.dmg` |
+
+Extract the downloaded ZIP, then follow the installation steps for your platform below. Already received an installer from a trusted maintainer? Go straight to those steps.
+
+### If The Installer Is Missing
+
+If there is no matching artifact, it has expired, or there are no completed builds, generate a new build:
+
+1. Make sure the latest project code is pushed to the GitHub repository.
+2. Open **Repository > Actions > Desktop Builds > Run workflow**.
+3. Choose the branch with the code you need and confirm **Run workflow**. This requires permission to run workflows in the repository; you can do it from a Mac or Windows computer.
+4. Open the new run and wait for the build for your platform to succeed.
+5. Return to **Summary > Artifacts** and download the matching artifact from the table above.
+
+If **Run workflow** is unavailable, ask a repository maintainer to run it and share the installer. If a build fails, check the failed step in the run's logs; that platform's new installer will not be available until the build succeeds.
+
+For a local Apple Silicon Mac installation, you can also use the included [release/Job Applicant Agent-1.0.4-arm64.dmg](release/Job%20Applicant%20Agent-1.0.4-arm64.dmg).
+
+### Install On Windows
+
+1. On your Windows computer, open the `.exe` installer from the extracted ZIP.
+2. Follow the installation prompts.
+3. Launch **Job Applicant Agent** from the Start menu.
+
+These are unsigned development builds. Windows may show a security warning. Only run an installer whose source you trust; do not disable Windows security. Windows installation and app behavior still require testing on a Windows machine.
+
+### Install On macOS
 
 1. Open the DMG and drag **Job Applicant Agent** into **Applications**.
 2. Launch the app from Applications.
-3. If macOS blocks this unsigned build, open **System Settings > Privacy & Security > Open Anyway** after attempting to launch it.
+3. If macOS blocks this unsigned build, verify that you trust its source, then open **System Settings > Privacy & Security > Open Anyway** after attempting to launch it.
 
-You do not need Python, Git, or Node.js to use the installed app. When upgrading, quit the old app and replace it. Your saved resumes and preferences stay on your device.
-
-Windows and Intel Mac packaging are configured, but those installers are not included in this local release. See [docs/RELEASE.md](docs/RELEASE.md) for build instructions and remaining release checks.
+**Upgrading:** quit the app before running the new installer or replacing the Mac app. Your saved resumes and preferences stay on your device.
 
 ## Use The App
 
@@ -30,13 +66,9 @@ Windows and Intel Mac packaging are configured, but those installers are not inc
 6. **Create drafts:** preview your emails and confirm the batch. Each draft includes the selected resume.
 7. Open **Gmail Drafts**, review everything, and send manually. The app notifies you when drafting finishes.
 
-Multi-job documents are split by job headings, not simply by page. If an earlier import appeared as one job, choose **Overview > Re-analyze**. Existing Gmail drafts are preserved.
+**Matching:** with skills such as `Selenium, Playwright`, **Any (OR)** accepts either skill; **All (AND)** requires both. Jobs must also meet your minimum match percentage. Matching is local and rule-based, so review the selected resume and job details before drafting.
 
-To remove uploaded job files, open **Job documents**, click the trash icon beside a PDF/DOCX file, and confirm. This removes its extracted jobs from the workspace, not your original file, resumes, or Gmail drafts. Uploads with the same filename are grouped together.
-
-With `Selenium, Playwright`, **Any (OR)** accepts Selenium-only, Playwright-only, or both. **All (AND)** requires both. Jobs still need your minimum score to appear in Matching; All jobs retains unrelated imports. Matching is local and rule-based, not an AI hiring prediction.
-
-Resume selection prioritizes evidence for the job's relevant focus tools, with extra weight for tools in the job title, then overall fit. A filename such as Playwright.pdf is not evidence by itself. Review the selected resume and missing skills before drafting. Jobs that already have a Gmail draft show the resume used for that draft; existing drafts are not silently changed.
+**Remove job documents:** open **Job documents**, click the trash icon beside a file, and confirm. This removes its extracted jobs, not your original file, resumes, or Gmail drafts.
 
 ### Search Gmail Again
 
@@ -45,9 +77,7 @@ Resume selection prioritizes evidence for the job's relevant focus tools, with e
 3. Choose **Search Gmail**. The list switches to **Latest Gmail search only**; older jobs and drafts remain saved.
 4. **Reset search** clears the date range, terms, and advanced query. **Reset filters** on Overview clears the text/status/source selection and latest-search scope without deleting jobs or changing saved preferences.
 
-Gmail AND/OR applies to the email search; Preferred skills independently filters each extracted job. An email containing both terms can contain separate jobs. Date limits remain in effect alongside the grouped terms.
-
-Each opportunity shows its file source or email subject, sender, and original email date. Additional email origins are available in the source tooltip. For older jobs without that metadata, sync the relevant emails again; normal duplicate imports update the origins rather than deleting existing draft records.
+Gmail search terms filter emails; your **Preferred skills** separately filter the jobs found inside them.
 
 ## Connect Gmail
 
@@ -70,13 +100,11 @@ Google does not offer a create-drafts-only permission: its compose scope also pe
 
 ### Access Blocked Or Sign-In Timed Out?
 
-1. Select the Google Cloud project that created your imported JSON. Compare its client ID with the ID shown in the app's Gmail troubleshooting section. The app also shows the project ID/number when available and targets its setup links to that project.
+1. Select the Google Cloud project that created your imported JSON. Compare its client ID with the ID shown in the app's Gmail troubleshooting section.
 2. Open [Audience > Test users](https://console.cloud.google.com/auth/audience), add the exact account shown on Google's blocked page, and **Save**.
 3. Cancel the pending attempt using **X**, **Escape**, or **Cancel sign-in**. Close the blocked browser tab and sign in again with that approved account.
 
-You do not need to publish the app or download a new JSON just to update test users. A blocked Google page may never return to the app, causing the three-minute timeout. Work or school accounts may also need administrator approval.
-
-If the same error persists after saving the account, share a screenshot of the **saved Test users list and selected project**, not another screenshot of the error. Never share the credentials JSON or client secret. An app update cannot override Google's account-approval settings.
+You do not need to publish the app or download a new JSON just to update test users. Work or school accounts may also need administrator approval. Never share your credentials JSON or client secret.
 
 ## Privacy And Limits
 
@@ -89,29 +117,24 @@ If the same error persists after saving the account, share a screenshot of the *
 
 ## For Developers
 
-Requires Node.js 24 LTS and npm:
+To run from source, install Node.js 24 LTS, open a terminal in the project folder, and run:
 
 ```sh
 npm ci
 npm run dev:desktop
 ```
 
-Useful commands:
+To build a Windows installer locally, run these commands **on Windows** instead:
 
-| Command | Purpose |
-| --- | --- |
-| `npm test` | Run regression tests |
-| `npm run typecheck` | Check TypeScript |
-| `npm run test:desktop` | Build and smoke-test Electron |
-| `npm run package:mac` | Build macOS installers |
-| `npm run package:win` | Build the Windows installer on Windows |
+```powershell
+npm ci
+npm run package:win
+```
 
-For a browser preview, run `npm run dev` and open http://127.0.0.1:5173. It uses fictional data; native file and Gmail actions require the desktop app.
+The `.exe` installer is written to the `release` folder. See [docs/RELEASE.md](docs/RELEASE.md) for other build commands, testing, and signing requirements.
 
 ## More Details
 
 - Architecture and folder structure: [docs/architecture.md](docs/architecture.md)
-- Requirements: [docs/requirements.md](docs/requirements.md)
-- Implementation plan: [docs/plan.md](docs/plan.md)
 - Packaging, testing, signing, and release limits: [docs/RELEASE.md](docs/RELEASE.md)
 - Publisher-provided Google sign-in: [resources/README.md](resources/README.md)
