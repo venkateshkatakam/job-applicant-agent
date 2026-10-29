@@ -1,0 +1,17 @@
+date: '2026-10-29'
+plan: docs/plan.md
+task_count: 15
+plan_items:
+  P1.1: [T001]
+  P2.1: [T002, T003, T004]
+  P2.2: [T005]
+  P3.1: [T006]
+  P3.2: [T007, T008]
+  P4.1: [T009, T010, T011]
+  P5.1: [T012, T013]
+  P5.2: [T014, T015]
+pending_release_gates:
+  - Live Gmail consent and draft acceptance with user-provided OAuth client
+  - Windows runtime and installer acceptance
+  - Target-platform OS encryption and notification acceptance
+  - Public-distribution signing and notarization

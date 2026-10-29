@@ -1,0 +1,20 @@
+date: '2026-10-29'
+spec: docs/requirements.md
+plan: docs/plan.md
+coverage: 15/15
+requirements:
+  REQ-001: [P3.1, P5.1]
+  REQ-002: [P3.1, P4.1]
+  REQ-003: [P2.1]
+  REQ-004: [P4.1]
+  REQ-005: [P2.1]
+  REQ-006: [P2.1, P4.1]
+  REQ-007: [P2.1, P4.1]
+  REQ-008: [P2.1, P4.1]
+  REQ-009: [P3.2]
+  REQ-010: [P3.2, P5.1]
+  REQ-011: [P1.1, P4.1]
+  REQ-012: [P2.1, P3.1]
+  REQ-013: [P2.2, P3.1, P3.2]
+  REQ-014: [P1.1, P5.2]
+  REQ-015: [P3.2, P4.1]
